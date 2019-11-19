@@ -136,7 +136,6 @@ function addView(id, success) {
 
 //按标题查找博客
 function searchByKey(key, page, pageSize, success) {
-    console.log(key, page, pageSize, 221)
     let connection = dbUtil.createConnect()
     let queryKey = `%${key}%`
     let queryStr = "select * from blogs where title like ? order by ctime desc limit ?,?"

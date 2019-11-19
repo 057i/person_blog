@@ -16,7 +16,6 @@ function setComment(req, res) {
     let params = url.parse(req.url, true).query
 
     let time = timer()
-    console.log(params)
     commentDao.setComment(params.blog_id, params.parent, params.user_name, params.comment, params.email, time, time, function (result) {
             res.writeHead(200)
             res.write(JSON.stringify(result))
