@@ -1,0 +1,397 @@
+@font-face {
+    font-family: "myFont";
+    src: url("../font/glyphicons-halflings-regular.woff2");
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    min-width: 920px;
+    background-image: url("../image/bg.jpg");
+    font-size: 14px;
+}
+
+header {
+    width: 100%;
+    background: #191918;
+}
+
+.nav-content {
+    margin: 0 auto;
+    width: 80%;
+    position: relative;
+    height: 50px;
+}
+
+.nav-left, .search-bar {
+    display: inline-block;
+
+}
+
+.nav-left {
+    position: absolute;
+    left: 0;
+    height: 50px;
+}
+
+.search-bar {
+    background: yellow;
+    position: absolute;
+    right: 0;
+    height: 50px;
+}
+
+
+.nav-content a {
+    color: #eee;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+    line-height: 50px;
+    margin: 5px 10px;
+}
+
+.nav-content a:hover {
+    color: #d5d5d5;
+}
+
+.menu {
+    display: inline;
+}
+
+.menu > li {
+    list-style: none;
+    height: 50px;
+    line-height: 50px;
+    display: inline-block;
+}
+
+.menu > li > a {
+    display: inline-block;
+}
+
+.search-bar {
+    height: 50px;
+    line-height: 50px;
+}
+
+.search-bar input {
+    height: 30px;
+    box-sizing: border-box;
+    padding: 10px 15px;
+    border-radius: 5px;
+    outline: none;
+    border: 1px solid;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 50px;
+}
+
+.search-bar button {
+    height: 30px;
+    width: 40px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    outline: none;
+    border: 1px solid;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 0;
+}
+
+.main {
+    width: 80%;
+    margin: 0 auto;
+    box-sizing: border-box;
+    padding: 25px 10px;
+    overflow: hidden;
+}
+
+.main > .left-content {
+    width: 66%;
+    display: inline-block;
+    box-sizing: border-box;
+
+}
+
+.blog_detail {
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, .5);
+    padding: 15px 20px
+}
+
+.blog_position {
+    padding: 5px 0;
+}
+
+.blog_msg {
+    padding: 10px 0 15px;
+
+}
+
+.commentsArea {
+    margin: 40px 0;
+}
+
+
+.content {
+    padding: 5px 0;
+    overflow: hidden;
+    white-space: pre-line;
+    word-break: break-all;
+
+}
+
+
+.comment {
+    background-color: #d9edf7;
+    border: 1px dashed #a2a2a2;
+    color: #31708f;
+    padding: 10px 15px;
+
+
+}
+
+.comment-msg {
+    display: inline-block;
+    height: 40px;
+    vertical-align: middle;
+}
+
+.comment-user {
+    font-weight: 700;
+}
+
+.comment-msg a {
+    text-decoration: none;
+    color: #31708f;
+}
+
+.avator {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+
+.submit-comment-area {
+    margin-top: 30px;
+    background-color: #f5f5f5;
+    border: 1px solid #e3e3e3;
+    border-radius: 5px;
+    padding: 20px 20px;
+    box-sizing: border-box;
+
+
+}
+
+.submit-comment {
+    width: 90%;
+
+}
+
+.submit-comment > input, .submit-comment textarea {
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+    height: 34px;
+    border-radius: 4px;
+    outline: none;
+    border: 1px solid #ccc;
+    line-height: 34px;
+    padding: 0 10px;
+    color: #555;
+    font-size: 14px;
+}
+
+.submit-comment > input:focus, .submit-comment textarea:focus, .checkBox > input:focus {
+    border-color: #66afe9;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+}
+
+.submit-comment textarea {
+    height: 90px;
+}
+
+.checkBox {
+    margin: 10px 0;
+}
+
+.checkBox > input {
+    height: 34px;
+    border-radius: 4px;
+    outline: none;
+    border: 1px solid #ccc;
+    line-height: 34px;
+    padding: 0 10px;
+    color: #555;
+    font-size: 14px;
+}
+
+
+.btnBox button {
+    background-color: #ccc;
+    color: #191918;
+    outline: none;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    padding: 10px 15px;
+    font-weight: bolder;
+    margin-right: 5px;
+}
+
+.btnBox button:hover {
+    cursor: pointer;
+}
+#checkImg{
+    vertical-align: middle;
+}
+
+
+.main > .right-content-Wrapper {
+    width: 34%;
+    float: right;
+    display: inline-block;
+    box-sizing: border-box;
+    padding: 0px 25px;
+}
+
+.right-content-Wrapper .right-content-Area {
+    width: 100%;
+    overflow: hidden;
+    box-shadow: 1px 2px 4px rgba(0, 0, 0, .6);
+    margin-bottom: 20px;
+}
+
+.right-content-Wrapper .right-content-Area .right-content-title {
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    color: #abcdef;
+    background-color: #191918;
+    padding: 10px 15px;
+
+}
+
+.right-content-Area .right-content {
+    background-color: #333;
+    padding: 15px;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+
+}
+
+.right-content-Wrapper .right-content-Area .right-content a {
+    text-decoration: none;
+    color: #d78e4b;
+
+}
+
+.right-content-Wrapper .hot, .right-content-Wrapper .newCommentArea {
+    width: 100%;
+    background-color: rgb(31, 31, 31);;
+    padding: 0;
+    margin: 0;
+}
+
+.hot li, .newCommentArea li {
+    list-style: none;
+    border-bottom: 1px solid rgb(41, 41, 41);;
+    padding: 15px;
+}
+
+.right-content-Wrapper .right-content-Area .hot li a {
+    color: #eee;
+    text-decoration: none;
+}
+
+.right-content-Wrapper .right-content-Area .hot li a:hover {
+    color: #337ab7;
+}
+
+.newCommentArea > li > a {
+    color: #777;
+    text-decoration: none;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: inline-block;
+    width: 100%;
+}
+
+.newCommentArea > li > a:hover {
+    color: #337ab7;
+}
+
+.user {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.user .userName {
+    color: #eee;
+}
+
+.user .time {
+    color: #eee;
+}
+
+.right-content-Area .linkTo {
+    background-color: #333;
+    padding: 15px;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.linkTo span {
+    width: 45%;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.linkTo span a {
+    color: #eee;
+    text-decoration: none;
+
+}
+
+.linkTo a:hover {
+    color: #337ab7;
+}
+
+.footer {
+    padding: 15px 0;
+    background-color: #2a2a2a;
+    text-align: center;
+    border-top: 1px solid #e5e5e5;
+    width: 100%;
+}
+
+.footer ul {
+    overflow: hidden;
+    padding: 0;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.footer ul li {
+    list-style: none;
+    display: inline-block;
+    padding: 5px;
+}
+
+.footer a {
+    text-decoration: none;
+    color: #a2a2a2;
+}
+
+

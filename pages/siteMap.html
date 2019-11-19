@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="./css/base.css">
+    <link rel="stylesheet" href="./css/siteMap.css">
+</head>
+<body>
+<h2> 个人博客siteMap</h2>
+<header class="siteMapHeader">
+    <a href="/" class="headerTitle">个人博客</a>>><a href="./siteMap.html">站点地图</a>
+</header>
+<div class="siteMapContent" id="siteMapContent">
+    <h4>最新文章</h4>
+    <ul>
+        <!--        <li><a href="#">php 验证身份证号</a></li>-->
+        <!--        <li><a href="#">平安拼团80块的beatsx</a></li>-->
+        <li v-for="(siteMapItem,index) in siteMapList" keys="index">
+            <a :href="siteMapItem.link">{{siteMapItem.title}}</a>
+        </li>
+    </ul>
+</div>
+
+<footer class="siteMapFooter">
+    <span>查看博客首页: <a href="./index.html">个人博客</a></span>
+</footer>
+<script type="text/javascript" src="https://unpkg.com/vue"></script>
+<script src="https://cdn.bootcss.com/axios/0.19.0-beta.1/axios.js"></script>
+<script src="./js/siteMap.js"></script>
+</body>
+</html>

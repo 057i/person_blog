@@ -1,0 +1,40 @@
+html, body {
+    background: white;
+}
+h2 {
+    text-align: center;
+}
+.siteMapHeader, .siteMapContent, .siteMapFooter {
+    background-color: white;
+    padding: 5px 10px;
+    border: 1px solid #EEEEEE;
+    width: 95%;
+    margin: 10px auto;
+}
+
+.siteMapHeader .headerTitle {
+    font-weight: 600;
+}
+
+.siteMapHeader a {
+    color: #333333;
+}
+
+.siteMapContent h4 {
+    padding: 5px;
+}
+
+.siteMapContent > ul > li {
+    padding: 5px 10px;
+    list-style: none;
+}
+
+
+.siteMapContent > ul > li > a, .siteMapFooter a {
+    color: #333333;
+}
+
+
+
+
+

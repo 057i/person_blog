@@ -1,0 +1,20 @@
+.article-wrapper {
+    background: white;
+    border-radius: 5px;
+    box-shadow: 1px 1px 5px #191918;
+    overflow: hidden;
+
+}
+
+.article {
+    margin: 0 10px;
+}
+
+.article .red {
+    color: red;
+}
+
+
+
+
+

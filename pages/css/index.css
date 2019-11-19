@@ -1,0 +1,31 @@
+.turnPage {
+    text-align: center;
+
+}
+
+.turnPage ul {
+    overflow: hidden;
+    /*margin: 0 auto;*/
+}
+
+.turnPage ul > li {
+    list-style: none;
+    float: left;
+    padding: 10px;
+    background: pink;
+    margin: 0 5px;
+    border: 1px solid darkgray;
+    border-radius: 10px;
+}
+
+.turnPage ul > li:hover {
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 2px 2px 2px 2px lightblue;
+}
+
+.turnPage .curPage {
+    color: red;
+}
+
+
