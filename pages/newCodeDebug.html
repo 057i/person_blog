@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-hans">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        .box {
+            width: 70%;
+            margin: 0 auto;
+
+        }
+
+        textarea {
+            width: 100%;
+            height: 200px;
+            display: inline-block;
+            margin-top: 20px;
+            margin-right: 20px;
+            background: #abcdef;
+            outline: none;
+            border: 1px solid transparent;
+            border-radius: 2px;
+        }
+
+        #runBtn {
+            /*display: inline-block;*/
+            width: 80px;
+            height: 30px;
+            outline: none;
+            border: 1px solid transparent;
+            border-radius: 2px;
+
+        }
+
+        #runBtn:hover {
+            cursor: pointer;
+            box-shadow: 1px 2px 5px #000066;
+        }
+    </style>
+</head>
+
+<body>
+<header class="newCodeWrapper">
+    <a href="/" class="headerTitle">个人博客</a>>><a href="./newCodeDebug.html">仿牛客网算法在线编译</a>
+</header>
+<h2>仿牛客网算法在线编译</h2>
+<div class="box">
+    <div>
+        timeout :
+        <input type="number" value="2000" id="timeout">
+    </div>
+
+    <textarea name="code" id="code" placeholder="//代码区"></textarea>
+    <textarea name="input" id="input" placeholder="//输入参数区，可直接复制牛客网参数"></textarea>
+    <button id="runBtn">RUN</button>
+    <textarea name="output" id="output" placeholder="//输出"></textarea>
+</div>
+
+</body>
+<script src="./js/newCodeDebug.js"></script>
+</html>
