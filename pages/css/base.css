@@ -92,8 +92,8 @@ header {
 
 .search-bar button {
     height: 30px;
-    width: 40px;
-    box-sizing: border-box;
+    width: 2em;
+    box-sizing: content-box;
     border-radius: 5px;
     outline: none;
     border: 1px solid;
