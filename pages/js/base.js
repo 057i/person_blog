@@ -31,7 +31,7 @@ let randomTags = new Vue({
             let arr = []
             console.log(result.data)
             for (let i = 0; i < result.data.length; i++) {
-                arr.push({tagName: result.data[i].tagName, link: result.data[i].id})
+                arr.push({ tagName: result.data[i].tagName, link: result.data[i].id })
             }
             console.log(arr)
             randomTags.tags = arr
@@ -292,6 +292,19 @@ let searchBar = new Vue({
     }
 
 
+})
+
+
+
+//导航栏实例
+let NavBar = new Vue({
+    el: "#navMenu",
+    methods: {
+        //跳转至主站点
+        jumpTo_MyWebSite: function () {
+            location.href = "http://www.fz12580.cn"
+        }
+    }
 })
 
 

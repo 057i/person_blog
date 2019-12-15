@@ -71,6 +71,18 @@ header {
 .menu > li > a {
     display: inline-block;
 }
+#navMenu span{
+    font-size: 20px;
+    color: #eee;
+    line-height: 50px;
+    margin: 5px 10px;
+    cursor: pointer;
+}
+
+#navMenu span:hover{
+    color: #d5d5d5;
+}
+
 
 .search-bar {
     height: 50px;
