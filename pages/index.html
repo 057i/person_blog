@@ -58,10 +58,11 @@
                 <!--            翻页-->
                 <div class="turnPage" id="turnPage">
                     <ul>
-                        <li @click="setMovePage(-1)">
-                            <</li> <li v-for="(elm,index) in pageNumberList" :key="elm.val"
-                                :class="{'curPage':elm.val==curPage}" @click="setCurPage(elm.val)">
-                                {{elm.text}}
+                        <li @click="setMovePage(-1)"><
+                        </li>
+                        <li v-for="(elm,index) in pageNumberList" :key="elm.val" :class="{'curPage':elm.val==curPage}"
+                            @click="setCurPage(elm.val-1)">
+                            {{elm.text}}
                         </li>
                         <li @click="setMovePage(+1)">></li>
                     </ul>
