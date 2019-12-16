@@ -44,6 +44,7 @@ function getBlog(page, pageSize, success) {
     connection.query(queryStr, [Number(page), Number(pageSize)], function (err, result) {
         if (err === null) {
             success(result)
+
         } else {
             console.log(err)
         }

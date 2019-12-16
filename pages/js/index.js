@@ -56,7 +56,19 @@ let articleList = new Vue({
             } else {
                 return
             }
+        },
+        formatDate(time) {
+            var now = new Date(time);
+            var year = now.getFullYear();  //取得4位数的年份
+            console.log(now)
+            var month = now.getMonth() + 1;  //取得日期中的月份，其中0表示1月，11表示12月
+            var date = now.getDate();      //返回日期月份中的天数（1到31）
+            var hour = now.getHours();     //返回日期中的小时数（0到23）
+            var minute = now.getMinutes(); //返回日期中的分钟数（0到59）
+            var second = now.getSeconds(); //返回日期中的秒数（0到59）
+            return year + "-" + month + "-" + date + " " + hour + ":" + minute
         }
+
     },
     computed: {
         //获取内容
@@ -85,8 +97,23 @@ let articleList = new Vue({
 
                 } else {
                     axios.get(`/getBlog?page=${self.curPage}&pageSize=${self.pageSize}`).then(function (res) {
-                        console.log(res)
+                        let result
+                        for (let i = 0; i < res.data.length; i++) {
+                            for (let j in res.data[i]) {
+                                if (j == "ctime") {
+                                    res.data[i][j] = self.formatDate(res.data[i][j])
+                                }
+                                if (j == "utime") {
+                                    res.data[i][j] = self.formatDate(res.data[i][j])
+                                }
+
+                            }
+
+                        }
+
+                        console.log(res.data, 999998)
                         self.list = res.data
+
                     })
                 }
                 document.documentElement.scrollTop = 0
@@ -101,23 +128,23 @@ let articleList = new Vue({
                 let totalPage = Math.ceil(this.totalCount / this.pageSize)
 
                 if (this.curPage > 2) {
-                    result.push({text: this.curPage - 2, val: this.curPage - 2})
+                    result.push({ text: this.curPage - 2, val: this.curPage - 2 })
                 }
                 if (this.curPage > 1) {
-                    result.push({text: this.curPage - 1, val: this.curPage - 1})
+                    result.push({ text: this.curPage - 1, val: this.curPage - 1 })
                 }
-                result.push({text: this.curPage, val: this.curPage})
+                result.push({ text: this.curPage, val: this.curPage })
 
                 console.log(this.curPage, (totalPage + this.pageSize - 1) / this.pageSize)
 
 
                 //判断倒数最后一页
                 if (this.curPage + 1 <= (totalPage + this.totalCount - 1) / this.pageSize) {
-                    result.push({text: this.curPage + 1, val: this.curPage + 1})
+                    result.push({ text: this.curPage + 1, val: this.curPage + 1 })
                 }
                 //判断倒数最后两页
                 if (this.curPage + 2 <= (totalPage + this.totalCount - 1) / this.pageSize) {
-                    result.push({text: this.curPage + 2, val: this.curPage + 2})
+                    result.push({ text: this.curPage + 2, val: this.curPage + 2 })
 
                 }
                 console.log(result, this.curPage, totalPage, this.totalCount)
@@ -136,9 +163,7 @@ let articleList = new Vue({
                     console.log("总页数", self.totalPage, self.pageSize)
                 })
             }
-        },
-
-
+        }
     },
 
 
@@ -146,7 +171,6 @@ let articleList = new Vue({
         //初始化的时候
         // 拿到当前页数和页面大小发送ajax请求
         //渲染翻页容器数据
-        console.log(this)
         this.getToTalPage()
         this.getContent()
         this.getTurnPage()

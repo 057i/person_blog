@@ -1,3 +1,4 @@
+// import format from "../../utils/formatTime"
 //随机标签vue实例
 let randomTags = new Vue({
     el: "#randomTags",
@@ -96,19 +97,32 @@ let newComment = new Vue({
             }
         ]
     },
-    computed: {},
     created() {
+        let self = this
         axios.get("/getNewComments").then(function (res) {
             let result = []
             for (let i = 0; i < res.data.length; i++) {
                 result.push({
                     userName: res.data[i].user_name,
-                    ctime: res.data[i].ctime,
+                    ctime: self.formatDate(res.data[i].ctime),
                     commentContent: res.data[i].comment
                 })
             }
             newComment.newCommentList = result
         })
+    },
+    methods: {
+        formatDate(time) {
+            var now = new Date(time);
+            var year = now.getFullYear();  //取得4位数的年份
+            console.log(now)
+            var month = now.getMonth() + 1;  //取得日期中的月份，其中0表示1月，11表示12月
+            var date = now.getDate();      //返回日期月份中的天数（1到31）
+            var hour = now.getHours();     //返回日期中的小时数（0到23）
+            var minute = now.getMinutes(); //返回日期中的分钟数（0到59）
+            var second = now.getSeconds(); //返回日期中的秒数（0到59）
+            return year + "-" + month + "-" + date + " " + hour + ":" + minute
+        }
     }
 })
 
@@ -122,6 +136,39 @@ let commentArea = new Vue({
         vcode: "",// 存储验证码
         vImg: "",//随机验证码图片
         replayParent: null
+    },
+    methods: {
+        //格式化请求回来的数组数据的时间
+        format(arr) {
+            let newArr = []
+            let self = this
+            for (let i = 0; i < arr.length; i++) {
+                newArr[i] = {}
+                for (let j in arr[i]) {
+
+                    if (j == "ctime" || j == "utime") {
+                        newArr[i][j] = self.formatDate(arr[i][j])
+                    } else {
+                        newArr[i][j] = arr[i][j]
+                    }
+                }
+            }
+            return newArr
+
+        },
+        //格式化时间函数
+        formatDate(time) {
+            var now = new Date(time);
+            var year = now.getFullYear();  //取得4位数的年份
+            console.log(now)
+            var month = now.getMonth() + 1;  //取得日期中的月份，其中0表示1月，11表示12月
+            var date = now.getDate();      //返回日期月份中的天数（1到31）
+            var hour = now.getHours();     //返回日期中的小时数（0到23）
+            var minute = now.getMinutes(); //返回日期中的分钟数（0到59）
+            var second = now.getSeconds(); //返回日期中的秒数（0到59）
+            return year + "-" + month + "-" + date + " " + hour + ":" + minute
+        }
+
     },
 
     computed: {
@@ -238,7 +285,7 @@ let commentArea = new Vue({
             bid = paramsStr[0]
         }
 
-
+        let self = this
         axios.get("/getComments?bid=" + bid).then(function (res) {
 
             let result = []
@@ -251,7 +298,7 @@ let commentArea = new Vue({
                 }
             }
             console.log(result)
-            commentArea.commentList = result
+            commentArea.commentList = self.format(result)
 
 
         })
