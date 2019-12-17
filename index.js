@@ -28,7 +28,7 @@ app.get("/getBlogById", loader.get("/getBlogById"))
 //评论区接口
 app.get("/getComments", loader.get("/getComments"))
 app.get("/setComment", loader.get("/setComment"))
-app.get("/getCommentsCount", loader.get("/getCommentsCount"))
+// app.get("/getCommentsCount", loader.get("/getCommentsCount"))
 
 
 //随机验证码

@@ -87,7 +87,7 @@
             <div class="right-content-Area">
                 <div class="right-content-title">最近热门</div>
                 <ul class="hot" id="hot">
-                    <li v-for="hot in hotList"><a href="hot.url">{{hot.title}}</a></li>
+                    <li v-for="hot in hotList"><a :href="hot.url">{{hot.title}}</a></li>
                 </ul>
             </div>
 

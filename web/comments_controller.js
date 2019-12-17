@@ -5,7 +5,7 @@ let timer = require("../utils/timeUtil")
 
 function getComments(req, res) {
     let params = url.parse(req.url, true).query
-    commentDao.getComments(params.bid, function (result) {
+    commentDao.getComments(params.section, function (result) {
         res.writeHead(200)
         res.write(JSON.stringify(result))
         res.end()
@@ -16,7 +16,8 @@ function setComment(req, res) {
     let params = url.parse(req.url, true).query
 
     let time = timer()
-    commentDao.setComment(params.blog_id, params.parent, params.user_name, params.comment, params.email, time, time, function (result) {
+    console.log(params, 6785687)
+    commentDao.setComment(params.blog_id, params.parent, params.section, params.user_name, params.comment, params.email, time, time, function (result) {
             res.writeHead(200)
             res.write(JSON.stringify(result))
             res.end()
@@ -57,7 +58,6 @@ function getNewComments(req, res) {
 
     })
 }
-
 
 
 path.set("/getComments", getComments)
