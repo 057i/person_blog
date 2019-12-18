@@ -1,13 +1,12 @@
 let dbUtail = require("./dbUtail")
 
-console.log(dbUtail)
-
 //获取每日一句的数据库连接操作
 function getEveryDay(success) {
     let connection = dbUtail.createConnect();
-    let queryStr = "select * from every_day order by id asc limit 1;";
+    let randomStr = Math.floor(Math.random() * 10)
+    let queryStr = "select * from every_day limit ?,1";
     connection.connect()
-    connection.query(queryStr, [], function (err, result) {
+    connection.query(queryStr, [randomStr], function (err, result) {
 
         //没有错的情况
         if (err === null) {

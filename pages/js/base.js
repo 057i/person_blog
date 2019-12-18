@@ -208,13 +208,14 @@ let commentArea = new Vue({
             let self = this
             return function () {
 
-                let hasParent = location.hash.match(/(?<=parnet=)\d*/)
+                //正则判断当前回复是对页面的还是个人的，看看url是否有parent属性
+                let hasParent = location.hash.match(/(?<=parent=)\d*/)
+
+                //正则判断当前页面是博客详情页还是其他页面
                 let isBlogPage = location.href.match(/(?<=bid=)\d*/)
                 console.log(hasParent, isBlogPage, 90)
 
-                //正则判断当前回复是对页面的还是个人的，看看url是否有parent属性
 
-                //正则判断当前页面是博客详情页还是其他页面
                 if (!isBlogPage) {
 
                     //parent不存在，表示关于页面的评论，否则就是针对用户评论
@@ -256,7 +257,8 @@ let commentArea = new Vue({
                         //关于回复评论
                         self.section = isBlogPage[0]
                         self.parent = hasParent[0]
-                        self.blog_id = isBlogPage[0]
+                        self.blogId = isBlogPage[0]
+                        console.log(self.section, self.parent, self.blogId)
 
                     }
                 }
@@ -313,13 +315,9 @@ let commentArea = new Vue({
         reply() {
             //返回一个函数，接收到的参数都是在这个函数中
             return function (id) {
-                console.log(id)
 
                 //点击评论跳转回复区域，参数分别为stateObject,title,url
                 history.replaceState(null, '', `${location.pathname}#submit-comment-area?${location.search}parent=${id}`);
-
-                commentArea.parent = id
-
 
             }
         }
@@ -354,7 +352,7 @@ let commentArea = new Vue({
 })
 
 
-//搜索框按标题搜索实例
+//搜索框按标题搜索实例(bug)
 let searchBar = new Vue({
     el: "#searchBar",
     data: {

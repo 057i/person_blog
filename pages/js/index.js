@@ -3,7 +3,8 @@
 let everyDay = new Vue({
     el: "#every-day",
     data: {
-        content: ""
+        content: "",
+        author: ""
     },
     computed: {
         getContent() {
@@ -11,11 +12,12 @@ let everyDay = new Vue({
         }
     },
     created: function () {
+
         //组件创建的时候发送ajax请求
-        let self = this//
+        let self = this
         axios.get("/getEveryDay").then(function (res) {
-            //这里的this指向了window
             self.content = res.data[0].content
+            self.author = res.data[0].author
         })
     },
 
@@ -31,7 +33,7 @@ let articleList = new Vue({
         pageSize: 5,
         totalPage: 0,
         pageNumberList: [],
-        totalCount: 100
+        totalCount: 0
 
 
     },
@@ -44,7 +46,8 @@ let articleList = new Vue({
 
         },
         setMovePage(index) {
-            if (index == 1 && this.curPage + index != this.totalPage) {
+            console.log(index)
+            if (index == 1 && this.curPage + index <= this.totalPage) {
                 this.curPage = this.curPage + index
                 this.getTurnPage()
                 this.getContent()
@@ -75,7 +78,6 @@ let articleList = new Vue({
         getContent() {
             let self = this
             return function () {
-                console.log(self)
 
                 //截取url中的关键字key,以后用正则获取
                 let expStr = /(key=)?=\w+/g
@@ -113,7 +115,6 @@ let articleList = new Vue({
 
                         console.log(res.data, 999998)
                         self.list = res.data
-
                     })
                 }
                 document.documentElement.scrollTop = 0
@@ -122,31 +123,39 @@ let articleList = new Vue({
         },
         //获取翻页
         getTurnPage() {
-            console.log(this.curPage)
             return function () {
                 let result = []
                 let totalPage = Math.ceil(this.totalCount / this.pageSize)
 
-                if (this.curPage > 2) {
-                    result.push({ text: this.curPage - 2, val: this.curPage - 2 })
-                }
-                if (this.curPage > 1) {
-                    result.push({ text: this.curPage - 1, val: this.curPage - 1 })
-                }
-                result.push({ text: this.curPage, val: this.curPage })
+                if (totalPage <= 4) {
+                    for (let i = 1; i <= 4; i++) {
+                        result.push({text: i, val: i})
+                    }
+                } else {
+                    if (this.curPage > 2) {
+                        result.push({text: this.curPage - 2, val: this.curPage - 2})
+                    }
+                    if (this.curPage > 1) {
+                        result.push({text: this.curPage - 1, val: this.curPage - 1})
+                    }
+                    result.push({text: this.curPage, val: this.curPage})
 
-                console.log(this.curPage, (totalPage + this.pageSize - 1) / this.pageSize)
+                    console.log(this.curPage, (totalPage + this.pageSize - 1) / this.pageSize)
 
 
-                //判断倒数最后一页
-                if (this.curPage + 1 <= (totalPage + this.totalCount - 1) / this.pageSize) {
-                    result.push({ text: this.curPage + 1, val: this.curPage + 1 })
+                    //判断倒数最后一页
+                    if (this.curPage + 1 <= (totalPage + this.totalCount - 1) / this.pageSize) {
+                        result.push({text: this.curPage + 1, val: this.curPage + 1})
+                    }
+                    //判断倒数最后两页
+                    if (this.curPage + 2 <= (totalPage + this.totalCount - 1) / this.pageSize) {
+                        result.push({text: this.curPage + 2, val: this.curPage + 2})
+
+                    }
+
                 }
-                //判断倒数最后两页
-                if (this.curPage + 2 <= (totalPage + this.totalCount - 1) / this.pageSize) {
-                    result.push({ text: this.curPage + 2, val: this.curPage + 2 })
 
-                }
+
                 console.log(result, this.curPage, totalPage, this.totalCount)
                 this.pageNumberList = result
             }
@@ -157,10 +166,10 @@ let articleList = new Vue({
             let self = this
             return function () {
                 axios.get("/getblogcount").then(function (res) {
-                    console.log(res)
                     self.list = res.data
+                    self.totalCount = res.data["count(*)"]
                     self.totalPage = Math.ceil(self.totalCount / self.pageSize)
-                    console.log("总页数", self.totalPage, self.pageSize)
+                    console.log("总页数", self.totalPage, self.pageSize, res, res.data["count(*)"])
                 })
             }
         }
