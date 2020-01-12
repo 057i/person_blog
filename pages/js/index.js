@@ -46,10 +46,10 @@ let articleList = new Vue({
         setCurPage(index) {
             console.log("setCurPage")
             this.curPage = index + 1
-            console.log(index + 1)
+            // console.log(index + 1)
             this.getTurnPage()
             this.getContent()
-
+            document.documentElement.scrollTop = 0
 
         },
         setMovePage(index) {
@@ -67,6 +67,7 @@ let articleList = new Vue({
                 // this.getTurnPage()
                 return
             }
+            document.documentElement.scrollTop = 0
         },
         formatDate(time) {
             var now = new Date(time);
@@ -130,7 +131,7 @@ let articleList = new Vue({
                             }
 
                         }
-                        console.log(res.data, 999998)
+                        // console.log(res.data, 999998)
                         self.list = res.data
                     })
 
@@ -139,15 +140,13 @@ let articleList = new Vue({
 
 
             }
-            document.documentElement.scrollTop = 0
-            // self.getTurnPage()
 
 
         },
         //获取翻页
         getTurnPage() {
             return function () {
-                console.log("getTurnPage")
+                // console.log("getTurnPage")
                 let result = []
                 let totalPage = Math.ceil(this.totalCount / this.pageSize)
 
@@ -164,7 +163,7 @@ let articleList = new Vue({
                     }
                     result.push({text: this.curPage, val: this.curPage})
 
-                    console.log(this.curPage, (totalPage + this.pageSize - 1) / this.pageSize)
+                    // console.log(this.curPage, (totalPage + this.pageSize - 1) / this.pageSize)
 
 
                     //判断倒数最后一页
@@ -178,7 +177,7 @@ let articleList = new Vue({
                 }
 
 
-                console.log(result, this.curPage, totalPage, this.totalCount, 99990000)
+                // console.log(result, this.curPage, totalPage, this.totalCount, 99990000)
                 this.pageNumberList = result
             }
 
@@ -187,7 +186,7 @@ let articleList = new Vue({
         getToTalPage() {
             let self = this
             return function () {
-                console.log("getToTalPage")
+                // console.log("getToTalPage")
                 let paramsStr = location.search.split("").slice(1).join("")
                 // console.log(paramsStr, 555777)
                 axios.get(`/getblogcount?${paramsStr}`).then(function (res) {

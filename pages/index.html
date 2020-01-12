@@ -31,7 +31,7 @@
 </header>
 <div class="main">
     <div class="left-content">
-        <div class="every-day" id="every-day">
+        <div class="every-day" id="every-day" v-cloak>
             <span class="every-day-title">每日一句</span>
             <p>{{content}}</p>
             <span></span>
@@ -42,7 +42,7 @@
         <div class="articleList" id="articleList">
 
             <!--            博客列表-->
-            <div class="articleWrapper" v-for="(article,index) in list">
+            <div class="articleWrapper" v-for="(article,index) in list" v-cloak>
                 <div class="article">
                     <!--                    动态拼接类名-->
                     <a :href="['/blog_detail.html?bid='+article.id]" class="title">{{article.title}}</a>
@@ -56,7 +56,7 @@
             </div>
 
             <!--            翻页-->
-            <div class="turnPage" id="turnPage">
+            <div class="turnPage" id="turnPage" v-cloak>
                 <ul>
                     <li @click="setMovePage(-1)">上一页</li>
                     <li v-for="(elm,index) in pageNumberList" :key="elm.val" :class="{'curPage':elm.val==curPage}"
@@ -72,7 +72,7 @@
 
     </div>
 
-    <div class="right-content-Wrapper">
+    <div class="right-content-Wrapper" v-cloak>
         <!--        随机标签云区-->
         <div class="right-content-Area">
             <div class="right-content-title">随机标签云</div>
@@ -166,7 +166,6 @@
 
 <!--引入vue cdn 和自己的js-->
 <script type="text/javascript" src="https://unpkg.com/vue"></script>
-<script src="https://cdn.bootcss.com/vuex/3.0.1/vuex.min.js"></script>
 <script src="https://cdn.bootcss.com/axios/0.19.0-beta.1/axios.js"></script>
 <script src="./js/index.js"></script>
 <script src="./js/base.js"></script>

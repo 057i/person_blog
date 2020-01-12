@@ -71,7 +71,8 @@ header {
 .menu > li > a {
     display: inline-block;
 }
-#navMenu span{
+
+#navMenu span {
     font-size: 20px;
     color: #eee;
     line-height: 50px;
@@ -79,7 +80,7 @@ header {
     cursor: pointer;
 }
 
-#navMenu span:hover{
+#navMenu span:hover {
     color: #d5d5d5;
 }
 
@@ -319,6 +320,10 @@ header {
 .footer a {
     text-decoration: none;
     color: #a2a2a2;
+}
+
+[v-cloak] {
+    display: none;
 }
 
 

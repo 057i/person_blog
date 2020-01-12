@@ -163,7 +163,7 @@ let commentArea = new Vue({
                         }
                     }
                 }
-                console.log(result, 6786875)
+                // console.log(result, 6786875)
                 commentArea.commentList = self.format(result)
                 //初始化评论条数
                 commentArea.count = commentArea.commentList.length
@@ -192,7 +192,7 @@ let commentArea = new Vue({
 
                 //正则判断当前页面是博客详情页还是其他页面
                 let isBlogPage = location.href.match(/(?<=bid=)\d*/)
-                console.log(hasParent, isBlogPage, 90)
+                // console.log(hasParent, isBlogPage, 90)
 
 
                 if (!isBlogPage) {
@@ -237,7 +237,7 @@ let commentArea = new Vue({
                         self.section = isBlogPage[0]
                         self.parent = hasParent[0]
                         self.blogId = isBlogPage[0]
-                        console.log(self.section, self.parent, self.blogId)
+                        // console.log(self.section, self.parent, self.blogId)
 
                     }
                 }
@@ -320,7 +320,7 @@ let commentArea = new Vue({
             let paramsStr = location.search.slice(1).split("=")
             section = paramsStr[1]
         }
-        console.log(section)
+        // console.log(section)
         //初始化评论
         this.initialComments(section)
 
@@ -342,11 +342,12 @@ let searchBar = new Vue({
             return function () {
                 //将搜索映射到url
                 if (searchBar.key != "") {
-                    console.log(searchBar.key, location.href)
+                    // console.log(searchBar.key, location.href)
                     location.href = location.origin + `/?searchByWord=true&key=${searchBar.key}`
-                    console.log(searchBar.key)
+                    // console.log(searchBar.key)
                 } else {
                     history.pushState("", "", `/?searchByWord=false&page=1`);
+                    //调用别的实例方法进行博客的获取
                     articleList.getToTalPage()
                     articleList.getContent()
                 }
