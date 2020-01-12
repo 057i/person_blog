@@ -39,7 +39,7 @@
 
 
         <!--        提交留言区-->
-        <div class="commentsArea" id="commentsArea">
+        <div class="commentsArea" id="commentsArea" v-cloak>
             <span class="blog_comments_msg">目前有{{count?count:0}}条留言</span>
             <div class="blog_comment_list">
                 <div class="comment-wrapper" v-for="(comment,index) in commentList" keys="index">
@@ -80,7 +80,7 @@
     </div>
     <div class="right-content-Wrapper">
         <!--        随机标签云区-->
-        <div class="right-content-Area">
+        <div class="right-content-Area" v-cloak>
             <div class="right-content-title">随机标签云</div>
             <div class="right-content" id="randomTags">
                 <a :href="tag.link" v-for="tag in tags" :style="{fontSize:randomFontSize(),color:randomColor()}">{{tag.tagName}}</a>
@@ -89,7 +89,7 @@
         </div>
 
         <!--        最近热门区-->
-        <div class="right-content-Area">
+        <div class="right-content-Area" v-cloak>
             <div class="right-content-title">最近热门</div>
             <ul class="hot" id="hot">
                 <li v-for="hot in hotList"><a href="hot.url">{{hot.title}}</a></li>
@@ -98,7 +98,7 @@
 
 
         <!--        最新评论区-->
-        <div class="right-content-Area">
+        <div class="right-content-Area" v-cloak>
             <div class="right-content-title">最新评论</div>
             <ul class="newCommentArea" id="newComment">
                 <li v-for="comment in newCommentList">
