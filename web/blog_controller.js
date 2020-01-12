@@ -92,15 +92,30 @@ function addTagsBlogsMapping(tagName, blogId, ctime) {
 //按页数查询博客
 function getBlog(req, res) {
     let params = url.parse(req.url, true).query
-    console.log(params)
+    console.log(params, 789767685576)
     let page = params.page;
     let pageSize = params.pageSize
-    blogDao.getBlog(page, pageSize, function (result) {
-        res.writeHead(200)
-        res.write(JSON.stringify(result))
-        res.end()
 
-    })
+    // 逻辑判断,如果带搜索的
+    if (params.searchByWord == "true" && params.key != "") {
+        let key = params.key
+        blogDao.searchByKey(key, page, pageSize, function (result) {
+            res.writeHead(200)
+            res.write(JSON.stringify(result))
+            res.end()
+        })
+
+
+    } else {
+        //正常搜索
+        blogDao.getBlog(page, pageSize, function (result) {
+            res.writeHead(200)
+            res.write(JSON.stringify(result))
+            res.end()
+        })
+    }
+
+
 }
 
 //查询博客总数

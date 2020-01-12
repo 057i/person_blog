@@ -1,4 +1,3 @@
-// import format from "../../utils/formatTime"
 //随机标签vue实例
 let randomTags = new Vue({
     el: "#randomTags",
@@ -30,7 +29,7 @@ let randomTags = new Vue({
         //ajax请求将标签数据拿过来
         axios.get("/getRandomTags").then(function (result) {
             let arr = []
-            console.log(result.data)
+            // console.log(result.data)
             for (let i = 0; i < result.data.length; i++) {
                 arr.push({tagName: result.data[i].tagName, link: result.data[i].id})
             }
@@ -73,26 +72,6 @@ let newComment = new Vue({
             //     userName: "用户名",
             //     ctime: " 发布时间",
             //     commentContent: "使用码云git的webhook实现生产环境代"
-            // },
-            // {
-            //     userName: "用户名",
-            //     ctime: " 发布时间",
-            //     commentContent: "使用码云git的webhook实现生产环境代"
-            // },
-            // {
-            //     userName: "用户名",
-            //     ctime: " 发布时间",
-            //     commentContent: "使用码云git的webhook实现生产环境代"
-            // },
-            // {
-            //     userName: "用户名",
-            //     ctime: " 发布时间",
-            //     commentContent: "使用码云git的webhook实现生产环境代"
-            // },
-            // {
-            //     userName: "用户名",
-            //     ctime: " 发布时间",
-            //     commentContent: "使用码云git的webhook实现生产环境代"
             // }
         ]
     },
@@ -114,7 +93,7 @@ let newComment = new Vue({
         formatDate(time) {
             var now = new Date(time);
             var year = now.getFullYear();  //取得4位数的年份
-            console.log(now)
+            // console.log(now)
             var month = now.getMonth() + 1;  //取得日期中的月份，其中0表示1月，11表示12月
             var date = now.getDate();      //返回日期月份中的天数（1到31）
             var hour = now.getHours();     //返回日期中的小时数（0到23）
@@ -361,9 +340,9 @@ let searchBar = new Vue({
     computed: {
         setSearchKey(e) {
             return function () {
-                console.log(searchBar.key)
+                console.log(searchBar.key, location.href)
                 //将搜索映射到url
-                location.href = location.href + `?key=${searchBar.key}`
+                location.href = location.origin + `/?searchByWord=true&key=${searchBar.key}`
             }
         }
     },
@@ -372,7 +351,6 @@ let searchBar = new Vue({
     created() {
 
     }
-
 
 })
 

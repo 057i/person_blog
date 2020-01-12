@@ -41,12 +41,15 @@ let articleList = new Vue({
         setCurPage(index) {
             this.curPage = index + 1
             console.log(index + 1)
+
+
             this.getTurnPage()
             this.getContent()
 
+
         },
         setMovePage(index) {
-            console.log(index)
+
             if (index == 1 && this.curPage + index <= this.totalPage) {
                 this.curPage = this.curPage + index
                 this.getTurnPage()
@@ -59,6 +62,7 @@ let articleList = new Vue({
             } else {
                 return
             }
+            console.log(this.curPage, "当前")
         },
         formatDate(time) {
             var now = new Date(time);
@@ -78,26 +82,13 @@ let articleList = new Vue({
         getContent() {
             let self = this
             return function () {
+                let searchParamsStr = location.search
+                searchParamsStr = (searchParamsStr == "") ? searchParamsStr : searchParamsStr.split("").slice(1).join("")
 
-                //截取url中的关键字key,以后用正则获取
-                let expStr = /(key=)?=\w+/g
-                let url = location.href
 
-                //判断url有搜索值的情况
-                if (url.match(expStr)) {
-                    self.searchKey = url.match(expStr)[0].slice(1)
-                    console.log(self.searchKey)
-                }
+                //没有搜索的情况
+                if (searchParamsStr.indexOf("searchByWord=true") < 0) {
 
-                //如果有搜索值，按搜索值查找翻页，否则，按照正常来
-                if (self.searchKey) {
-                    axios.get(`/searchByKey?key=${self.searchKey}&page=${self.curPage}&pageSize=${self.pageSize}`).then(function (res) {
-                        console.log(res)
-                        self.list = res.data
-
-                    })
-
-                } else {
                     axios.get(`/getBlog?page=${self.curPage}&pageSize=${self.pageSize}`).then(function (res) {
                         let result
                         for (let i = 0; i < res.data.length; i++) {
@@ -112,14 +103,40 @@ let articleList = new Vue({
                             }
 
                         }
+                        // console.log(res.data, 999998)
 
+
+                        self.list = res.data
+                    })
+
+                } else {
+                    //有搜索的情况
+                    axios.get(`/getBlog?page=${self.curPage}&pageSize=${self.pageSize}&${searchParamsStr}`).then(function (res) {
+
+                        let result
+                        for (let i = 0; i < res.data.length; i++) {
+                            for (let j in res.data[i]) {
+                                if (j == "ctime") {
+                                    res.data[i][j] = self.formatDate(res.data[i][j])
+                                }
+                                if (j == "utime") {
+                                    res.data[i][j] = self.formatDate(res.data[i][j])
+                                }
+                            }
+
+                        }
                         console.log(res.data, 999998)
                         self.list = res.data
                     })
+
+
                 }
-                document.documentElement.scrollTop = 0
+
 
             }
+            document.documentElement.scrollTop = 0
+
+
         },
         //获取翻页
         getTurnPage() {
@@ -150,9 +167,7 @@ let articleList = new Vue({
                     //判断倒数最后两页
                     if (this.curPage + 2 <= (totalPage + this.totalCount - 1) / this.pageSize) {
                         result.push({text: this.curPage + 2, val: this.curPage + 2})
-
                     }
-
                 }
 
 
@@ -174,12 +189,31 @@ let articleList = new Vue({
             }
         }
     },
+    watch: {
+        //监听当前页码变化，则无刷新更新url
+        curPage: (newVal) => {
+            let url = window.location.href;
+            let params = location.search.split("").slice(1).join("")
+
+            url = url.replace(/page\=\d+/, `page=${articleList.curPage}`)
+            console.log(url)
+
+            history.replaceState("", "", url);
+        }
+
+
+    },
 
 
     created() {
         //初始化的时候
         // 拿到当前页数和页面大小发送ajax请求
         //渲染翻页容器数据
+
+        //初始化时候改变url
+        let url = window.location.origin;
+        history.replaceState("", "", `/?searchByWord=false&page=${this.curPage}`);
+
         this.getToTalPage()
         this.getContent()
         this.getTurnPage()
