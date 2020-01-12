@@ -18,6 +18,7 @@ let everyDay = new Vue({
         axios.get("/getEveryDay").then(function (res) {
             console.log(res)
             if (res.data[0]) {
+                console.log(res.data[0])
                 self.content = res.data[0].content
                 self.author = res.data[0].author
             }
@@ -43,17 +44,16 @@ let articleList = new Vue({
     },
     methods: {
         setCurPage(index) {
+            console.log("setCurPage")
             this.curPage = index + 1
             console.log(index + 1)
-
-
             this.getTurnPage()
             this.getContent()
 
 
         },
         setMovePage(index) {
-
+            console.log("setMovePage", index)
             if (index == 1 && this.curPage + index <= this.totalPage) {
                 this.curPage = this.curPage + index
                 this.getTurnPage()
@@ -64,6 +64,7 @@ let articleList = new Vue({
                 this.getTurnPage()
                 this.getContent()
             } else {
+                // this.getTurnPage()
                 return
             }
         },
@@ -76,12 +77,14 @@ let articleList = new Vue({
             var minute = now.getMinutes(); //返回日期中的分钟数（0到59）
             var second = now.getSeconds(); //返回日期中的秒数（0到59）
             return year + "-" + month + "-" + date + " " + hour + ":" + minute
-        }
+        },
+
 
     },
     computed: {
         //获取内容
         getContent() {
+            console.log("getContent")
             let self = this
             return function () {
                 let searchParamsStr = location.search
@@ -137,17 +140,19 @@ let articleList = new Vue({
 
             }
             document.documentElement.scrollTop = 0
+            // self.getTurnPage()
 
 
         },
         //获取翻页
         getTurnPage() {
             return function () {
+                console.log("getTurnPage")
                 let result = []
                 let totalPage = Math.ceil(this.totalCount / this.pageSize)
 
                 if (totalPage <= 4) {
-                    for (let i = 1; i <= 4; i++) {
+                    for (let i = 1; i <= totalPage; i++) {
                         result.push({text: i, val: i})
                     }
                 } else {
@@ -173,7 +178,7 @@ let articleList = new Vue({
                 }
 
 
-                console.log(result, this.curPage, totalPage, this.totalCount)
+                console.log(result, this.curPage, totalPage, this.totalCount, 99990000)
                 this.pageNumberList = result
             }
 
@@ -181,15 +186,18 @@ let articleList = new Vue({
         //获取总页数
         getToTalPage() {
             let self = this
-
-            let paramsStr = location.search.split("").slice(1).join("")
-            console.log(paramsStr)
             return function () {
+                console.log("getToTalPage")
+                let paramsStr = location.search.split("").slice(1).join("")
+                // console.log(paramsStr, 555777)
                 axios.get(`/getblogcount?${paramsStr}`).then(function (res) {
                     self.list = res.data
                     self.totalCount = res.data["count(*)"]
                     self.totalPage = Math.ceil(self.totalCount / self.pageSize)
                     console.log("总页数", self.totalPage, self.pageSize, res, res.data["count(*)"])
+
+                    //回调获取翻页数据
+                    self.getTurnPage()
                 })
             }
         }
@@ -223,7 +231,6 @@ let articleList = new Vue({
         //渲染翻页容器数据
         this.getToTalPage()
         this.getContent()
-        this.getTurnPage()
     }
 })
 

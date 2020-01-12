@@ -349,7 +349,6 @@ let searchBar = new Vue({
                     history.pushState("", "", `/?searchByWord=false&page=1`);
                     articleList.getToTalPage()
                     articleList.getContent()
-                    articleList.getTurnPage()
                 }
 
 
