@@ -72,11 +72,11 @@
 
     </div>
 
-    <div class="right-content-Wrapper" v-cloak>
+    <div class="right-content-Wrapper">
         <!--        随机标签云区-->
         <div class="right-content-Area">
             <div class="right-content-title">随机标签云</div>
-            <div class="right-content" id="randomTags">
+            <div class="right-content" id="randomTags" v-cloak>
                 <a :href="tag.link" v-for="tag in tags"
                    :style="{fontSize:randomFontSize(),color:randomColor()}">{{tag.tagName}}</a>
 
@@ -86,7 +86,7 @@
         <!--        最近热门区-->
         <div class="right-content-Area">
             <div class="right-content-title">最近热门</div>
-            <ul class="hot" id="hot">
+            <ul class="hot" id="hot" v-cloak>
                 <li v-for="hot in hotList"><a :href="hot.url">{{hot.title}}</a></li>
             </ul>
         </div>
@@ -95,7 +95,7 @@
         <!--        最新评论区-->
         <div class="right-content-Area">
             <div class="right-content-title">最新评论</div>
-            <ul class="newCommentArea" id="newComment">
+            <ul class="newCommentArea" id="newComment" v-cloak>
                 <li v-for="comment in newCommentList">
                     <div class="user">
                         <span class="userName">{{comment.userName}}</span>
