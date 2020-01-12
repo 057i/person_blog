@@ -40,8 +40,12 @@ function getBlog(page, pageSize, success) {
 
     let connection = dbUtil.createConnect()
     let queryStr = "select * from blogs order by ctime desc limit ?,?"
+
+    page = Number(page)
+    pageSize = Number(pageSize)
+
     connection.connect()
-    connection.query(queryStr, [Number(page), Number(pageSize)], function (err, result) {
+    connection.query(queryStr, [((page - 1) * pageSize + 1), pageSize], function (err, result) {
         if (err === null) {
             success(result)
 
@@ -54,19 +58,38 @@ function getBlog(page, pageSize, success) {
 
 
 //获取文章总数
-function getBlogCount(success) {
+function getBlogCount(key, success) {
     let connection = dbUtil.createConnect()
-    let queryStr = "select count(*) from blogs"
-    connection.connect()
-    connection.query(queryStr, function (err, result) {
-        console.log(result)
-        if (err === null) {
-            success(result)
-        } else {
-            console.log(err)
-        }
-    })
-    connection.end()
+    let queryStr
+
+    //关键字查文章总数
+    if (key == "") {
+        queryStr = "select count(*) from blogs"
+        connection.connect()
+        connection.query(queryStr, function (err, result) {
+            console.log(result)
+            if (err === null) {
+                success(result)
+            } else {
+                console.log(err)
+            }
+        })
+        connection.end()
+    } else {
+        queryStr = "select count(*) from blogs where title like ?"
+        let newkey = `%${key}%`
+        connection.connect()
+        connection.query(queryStr, [newkey], function (err, result) {
+            console.log(result)
+            if (err === null) {
+                success(result)
+            } else {
+                console.log(err)
+            }
+        })
+        connection.end()
+    }
+
 }
 
 

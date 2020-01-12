@@ -120,17 +120,35 @@ function getBlog(req, res) {
 
 //查询博客总数
 function getBlogCount(req, res) {
-    blogDao.getBlogCount(function (result) {
-        res.writeHead(200)
-        res.write(JSON.stringify(result[0]))
-        res.end()
-    })
+    console.log(3456789)
+    let params = url.parse(req.url, true).query
+    console.log(params, 99999999)
+
+    //查询某个搜索关键字的博客数量
+    if (params.searchByWord == "true") {
+        blogDao.getBlogCount(params.key, function (result) {
+            res.writeHead(200)
+            res.write(JSON.stringify(result[0]))
+            res.end()
+        })
+
+    } else {
+        //查询博客列表页
+        blogDao.getBlogCount("", function (result) {
+            res.writeHead(200)
+            res.write(JSON.stringify(result[0]))
+            res.end()
+        })
+
+    }
+
+
 }
 
 //按关键字查找博客
 function searchByKey(req, res) {
     let params = url.parse(req.url, true).query
-    console.log(params, 909)
+    // console.log(params, 909)
     blogDao.searchByKey(params.key, params.page, params.pageSize, function (result) {
         res.writeHead(200)
         res.write(JSON.stringify(result))
@@ -139,7 +157,7 @@ function searchByKey(req, res) {
 }
 
 
-//按页数查询博客
+//获取热门博客
 function getHotBlogs(req, res) {
     blogDao.getHotBlogs(5, function (result) {
         res.writeHead(200)

@@ -4,7 +4,7 @@ let tagsDao = require("../dao/TagsDao")
 
 function getRandomTags(req, res) {
     tagsDao.getAllTags(function (result) {
-        console.log(result, 770)
+        // console.log(result, 770)
         if (result != null && result.length > 0) {
             result.sort(function () {
                 return Math.random() > 0.5 ? true : false

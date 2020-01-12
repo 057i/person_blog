@@ -16,8 +16,12 @@ let everyDay = new Vue({
         //组件创建的时候发送ajax请求
         let self = this
         axios.get("/getEveryDay").then(function (res) {
-            self.content = res.data[0].content
-            self.author = res.data[0].author
+            console.log(res)
+            if (res.data[0]) {
+                self.content = res.data[0].content
+                self.author = res.data[0].author
+            }
+
         })
     },
 
@@ -62,12 +66,10 @@ let articleList = new Vue({
             } else {
                 return
             }
-            console.log(this.curPage, "当前")
         },
         formatDate(time) {
             var now = new Date(time);
             var year = now.getFullYear();  //取得4位数的年份
-            console.log(now)
             var month = now.getMonth() + 1;  //取得日期中的月份，其中0表示1月，11表示12月
             var date = now.getDate();      //返回日期月份中的天数（1到31）
             var hour = now.getHours();     //返回日期中的小时数（0到23）
@@ -179,8 +181,11 @@ let articleList = new Vue({
         //获取总页数
         getToTalPage() {
             let self = this
+
+            let paramsStr = location.search.split("").slice(1).join("")
+            console.log(paramsStr)
             return function () {
-                axios.get("/getblogcount").then(function (res) {
+                axios.get(`/getblogcount?${paramsStr}`).then(function (res) {
                     self.list = res.data
                     self.totalCount = res.data["count(*)"]
                     self.totalPage = Math.ceil(self.totalCount / self.pageSize)
@@ -206,14 +211,16 @@ let articleList = new Vue({
 
 
     created() {
+
+        //初始化时候判断url是否包含搜索关键参数，没有就渲染
+        if (location.search == "" || location.search.includes("searchByWord=false")) {
+            // let url = window.location.origin;
+            history.replaceState("", "", `/?searchByWord=false&page=${this.curPage}`);
+        }
+
         //初始化的时候
         // 拿到当前页数和页面大小发送ajax请求
         //渲染翻页容器数据
-
-        //初始化时候改变url
-        let url = window.location.origin;
-        history.replaceState("", "", `/?searchByWord=false&page=${this.curPage}`);
-
         this.getToTalPage()
         this.getContent()
         this.getTurnPage()

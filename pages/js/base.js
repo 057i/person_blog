@@ -33,7 +33,7 @@ let randomTags = new Vue({
             for (let i = 0; i < result.data.length; i++) {
                 arr.push({tagName: result.data[i].tagName, link: result.data[i].id})
             }
-            console.log(arr)
+            // console.log(arr)
             randomTags.tags = arr
         })
     }
@@ -140,7 +140,7 @@ let commentArea = new Vue({
         formatDate(time) {
             var now = new Date(time);
             var year = now.getFullYear();  //取得4位数的年份
-            console.log(now)
+            // console.log(now)
             var month = now.getMonth() + 1;  //取得日期中的月份，其中0表示1月，11表示12月
             var date = now.getDate();      //返回日期月份中的天数（1到31）
             var hour = now.getHours();     //返回日期中的小时数（0到23）
@@ -338,18 +338,29 @@ let searchBar = new Vue({
         key: ""
     },
     computed: {
-        setSearchKey(e) {
+        setSearchKey() {
             return function () {
-                console.log(searchBar.key, location.href)
                 //将搜索映射到url
-                location.href = location.origin + `/?searchByWord=true&key=${searchBar.key}`
+                if (searchBar.key != "") {
+                    console.log(searchBar.key, location.href)
+                    location.href = location.origin + `/?searchByWord=true&key=${searchBar.key}`
+                    console.log(searchBar.key)
+                } else {
+                    history.pushState("", "", `/?searchByWord=false&page=1`);
+                    articleList.getToTalPage()
+                    articleList.getContent()
+                    articleList.getTurnPage()
+                }
+
+
             }
         }
     },
-
-
     created() {
-
+        let params = location.search.split("").slice(1).join("");
+        let searchKey = params.match(/(?<=key\=)\w+(?=\&)*/)
+        console.log("搜索词", searchKey[0])
+        this.key = searchKey[0]
     }
 
 })
