@@ -1,7 +1,7 @@
 let dbUtil = require("./dbUtail")
 
-//设置博客
-function setBlog(title, content, ctime, view, tags, utime, success) {
+//添加博客
+function addBlog(title, content, ctime, view, tags, utime, success) {
     let connection = dbUtil.createConnect()
     let queryStr = "insert into blogs(title,content,ctime,view,tags,utime) values(?,?,?,?,?,?)"
     connection.connect()
@@ -14,6 +14,29 @@ function setBlog(title, content, ctime, view, tags, utime, success) {
     })
     connection.end()
 }
+
+
+
+//修改博客
+function setBlog(id, title, content, ctime, success) {
+    let connection = dbUtil.createConnect()
+    let queryStr = "update blogs set title=?,content=?,ctime=? where id=?"
+    connection.connect()
+    connection.query(queryStr, [title, content, ctime, id], function (err, result) {
+        if (err === null) {
+            success(result)
+        } else {
+            console.log(err)
+        }
+    })
+    connection.end()
+}
+
+
+
+
+
+
 
 //从数据库中调取博客id
 function getBlogId(title, content, ctime, success) {
@@ -45,7 +68,7 @@ function getBlog(page, pageSize, success) {
     pageSize = Number(pageSize)
 
     connection.connect()
-    connection.query(queryStr, [((page - 1) * pageSize + 1), pageSize], function (err, result) {
+    connection.query(queryStr, [((page - 1) * pageSize), pageSize], function (err, result) {
         if (err === null) {
             success(result)
 
@@ -158,6 +181,24 @@ function addView(id, success) {
 }
 
 
+//添加浏览次数
+function delBlog(id, success) {
+    let connection = dbUtil.createConnect()
+    let queryStr = "delete from blogs where id=?"
+    connection.connect()
+    connection.query(queryStr, [id], function (err, result) {
+        if (err === null) {
+            success(result)
+        } else {
+            console.log(err)
+        }
+    })
+    connection.end()
+}
+
+
+
+
 //按标题查找博客
 function searchByKey(key, page, pageSize, success) {
     let connection = dbUtil.createConnect()
@@ -176,6 +217,7 @@ function searchByKey(key, page, pageSize, success) {
 
 
 module.exports = {
+    addBlog: addBlog,
     setBlog: setBlog,
     getBlog: getBlog,
     getBlogId: getBlogId,
@@ -184,7 +226,8 @@ module.exports = {
     getNewBlogs: getNewBlogs,
     getHotBlogs: getHotBlogs,
     addView: addView,
-    searchByKey: searchByKey
+    searchByKey: searchByKey,
+    delBlog: delBlog
 }
 
 

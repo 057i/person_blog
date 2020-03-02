@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>登录--个人博客</title>
+    <link rel="stylesheet" href="./css/base.css">
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/login.css">
+</head>
+
+<body>
+    <header>
+        <div class="nav-content">
+            <div class="nav-left">
+                <a href="/">个人博客 | 技术博客</a>
+                <a href="/" class="headerTab">个人博客 | 博客管理</a>
+                <ul class="menu" id="navMenu">
+                    <li><a href="/">首页</a></li>
+                </ul>
+            </div>
+
+            <div class="search-bar" id="searchBar">
+                <input type="text" placeholder="输入关键字查找博客" v-model="key">
+                <button @click="setSearchKey()">搜索</button>
+            </div>
+
+        </div>
+    </header>
+    <div class="main">
+
+        <div class="login-form" id="loginForm">
+            <!-- <p>用户登录</p> -->
+            <div class="logo"></div>
+            <form>
+                <div class="form-item">
+                    <input id="username" type="text" autocomplete="off" placeholder="账户" v-model="username"
+                        autocomplete="off">
+                </div>
+
+                <div class="form-item">
+                    <input id="password" type="password" autocomplete="off" placeholder="登录密码" v-model="password"
+                        autocomplete="off">
+                    <p>{{errMsg}}</p>
+                </div>
+            </form>
+
+
+            <div class="form-item"><button id="submit" @click="checkLogin">登 录</button></div>
+        </div>
+    </div>
+    <footer class="footer">
+        <ul>
+            <li><a href="#">CSS/DIV</a></li>
+            <li><a href="#">视频分享</a></li>
+            <li><a href="#">java</a></li>
+            <li><a href="#">javacript</a></li>
+            <li><a href="#">Linux</a></li>
+            <li><a href="#">Mac</a></li>
+            <li><a href="#">PC技术</a></li>
+            <li><a href="#">PHP</a></li>
+            <li><a href="#">Python</a></li>
+            <li><a href="#">Raspberry</a></li>
+            <li><a href="#">Ubuntu</a></li>
+            <li><a href="#">wordpress</a></li>
+            <li><a href="#">关于SEO分享经验</a></li>
+            <li><a href="#">听听音乐</a></li>
+            <li><a href="#">幽默搞笑</a></li>
+            <li><a href="#">建站经验</a></li>
+            <li><a href="#">新闻资讯</a></li>
+            <li><a href="#">模拟飞行</a></li>
+            <li><a href="#">片言碎语</a></li>
+            <li><a href="#">幽默搞笑</a></li>
+            <li><a href="#">建站经验</a></li>
+            <li><a href="#">新闻资讯</a></li>
+            <li><a href="#">模拟飞行</a></li>
+            <li><a href="#">片言碎语</a></li>
+        </ul>
+        <p><a href="">Copyright © 2010-2020 人博客 All rights reserved.</a></p>
+    </footer>
+
+
+    <!--引入vue cdn 和自己的js-->
+    <script type="text/javascript" src="https://unpkg.com/vue"></script>
+    <!-- <script src="https://cdn.bootcss.com/axios/0.19.0-beta.1/axios.js"></script> -->
+    <!-- <script src="https://cdn.bootcss.com/axios/0.19.1/axios.js"></script> -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="./js/login.js"></script>
+
+</body>
+
+</html>

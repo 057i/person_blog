@@ -6,7 +6,7 @@ let tagsDao = require("../dao/TagsDao")
 let tagsBlogsMappingDao = require("../dao/TagsBlogsMappingDao")
 
 //添加博客
-function setBlog(req, res) {
+function addBlog(req, res) {
     let params = url.parse(req.url, true).query
     let title = params.title
     let content = params.blog
@@ -18,13 +18,11 @@ function setBlog(req, res) {
 
     console.log(title, content, ctime, view, tags, utime, 2222)
 
-    blogDao.setBlog(title, content, ctime, view, tags, utime, function (result) {
+    blogDao.addBlog(title, content, ctime, view, tags, utime, function (result) {
         console.log(result)
         res.writeHead(200)
         res.write("添加博客成功")
         res.end()
-
-
         //统一逗号大小写
         let tagArr = tags.split(",")
 
@@ -53,17 +51,50 @@ function setBlog(req, res) {
                         }
                     })
                 }
-
             }
-
-
         })
-
-
     })
-
-
 }
+
+
+
+
+// 修改博客
+function setBlog(request, response) {
+    request.on("data", function (data) {
+        let content = JSON.parse(data)
+        blogDao.setBlog(content.id, content.title, content.content, timer(), function (result) {
+            response.writeHead(200)
+            response.write("修改博客成功")
+            console.log("修改博客成功")
+            response.end()
+        })
+    })
+}
+
+
+function delBlog(request, response) {
+    request.on("data", function (data) {
+        let content = JSON.parse(data)
+        blogDao.setBlog(content.id, function (result) {
+            response.writeHead(200)
+            response.write("删除博客成功")
+            console.log("删除博客成功")
+            response.end()
+        })
+    })
+}
+
+
+
+
+
+
+
+
+
+
+
 
 //添加新的标签数据
 function addNewTags(tag, ctime) {
@@ -167,11 +198,15 @@ function getHotBlogs(req, res) {
 }
 
 
+
+
 path.set("/getBlogCount", getBlogCount)
+path.set("/addBlog", addBlog)
 path.set("/setBlog", setBlog)
 path.set("/getBlog", getBlog)
 path.set("/getHotBlogs", getHotBlogs)
 path.set("/searchByKey", searchByKey)
+path.set("/delBlog", delBlog)
 
 
 module.exports.path = path

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>编辑</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="keywords" content="opensource rich wysiwyg text editor jquery bootstrap execCommand html5" />
+    <meta name="description"
+        content="This tiny jQuery Bootstrap WYSIWYG plugin turns any DIV into a HTML5 rich text editor" />
+    <link rel="apple-touch-icon" href="//mindmup.s3.amazonaws.com/lib/img/apple-touch-icon.png" />
+    <!--    <link rel="shortcut icon" href="http://mindmup.s3.amazonaws.com/lib/img/favicon.ico">-->
+    <link href="bootstrap-wysiwyg-master/external/google-code-prettify/prettify.css" rel="stylesheet">
+    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.no-icons.min.css"
+        rel="stylesheet">
+    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-responsive.min.css"
+        rel="stylesheet">
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css" rel="stylesheet">
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="bootstrap-wysiwyg-master/external/jquery.hotkeys.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+    <script src="bootstrap-wysiwyg-master/external/google-code-prettify/prettify.js"></script>
+    <link href="bootstrap-wysiwyg-master/index.css" rel="stylesheet">
+    <script src="bootstrap-wysiwyg-master/bootstrap-wysiwyg.js"></script>
+    <link rel="stylesheet" href="./css/base.css">
+    <link rel="stylesheet" href="./css/admin.css">
+    <link rel="stylesheet" href="./css/edit_article.css">
+</head>
+
+<body>
+    <div id="editWrapper">
+        <header>
+            <div class="nav-content">
+                <div class="nav-left">
+                    <a href="/" class="headerTab">个人博客 | 博客管理</a>
+                    <ul class="menu" id="navMenu">
+                        <li><a href="/admin.html">回管理首页</a></li>
+                    </ul>
+                </div>
+
+                <div class="search-bar" id="searchBar">
+                    <input type="text" placeholder="输入关键字查找博客" v-model="key">
+                    <button @click="setSearchKey()">搜索</button>
+                </div>
+
+            </div>
+        </header>
+        <div class="main">
+            <div class="container" id="edit_article">
+                <div class="hero-unit">
+                    <div class="pull-right">
+                    </div>
+                    <h2>{{curEditor}}</h2>
+                    <br>
+
+                    <input type="text" placeholder="请输入博客标题" id="author"
+                        :style="{display:(curEditor==='博客编辑器'?'inline-block':'none')}" id="author" v-model="blogTitle">
+                    <input type="text" placeholder="请输入博客标签"
+                        :style="{display:(curEditor==='博客编辑器'?'inline-block':'none')}" id="author" v-model="blogTags">
+
+                    <input type="text" placeholder="请输入每日一句作者" id="author" v-model="everydayAuthor"
+                        :style="{display:(curEditor==='博客编辑器'?'none':'inline-block')}">
+
+
+
+                    <div id="alerts"></div>
+                    <div class="btn-toolbar" data-role="editor-toolbar" data-target="#editor">
+                        <div class="btn-group">
+                            <a class="btn dropdown-toggle" data-toggle="dropdown" title="Font"><i
+                                    class="icon-font"></i><b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                            </ul>
+                        </div>
+                        <div class="btn-group">
+                            <a class="btn dropdown-toggle" data-toggle="dropdown" title="Font Size"><i
+                                    class="icon-text-height"></i>&nbsp;<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a data-edit="fontSize 5">
+                                        <font size="5">Huge</font>
+                                    </a></li>
+                                <li><a data-edit="fontSize 3">
+                                        <font size="3">Normal</font>
+                                    </a></li>
+                                <li><a data-edit="fontSize 1">
+                                        <font size="1">Small</font>
+                                    </a></li>
+                            </ul>
+                        </div>
+                        <div class="btn-group">
+                            <a class="btn" data-edit="bold" title="Bold (Ctrl/Cmd+B)"><i class="icon-bold"></i></a>
+                            <a class="btn" data-edit="italic" title="Italic (Ctrl/Cmd+I)"><i
+                                    class="icon-italic"></i></a>
+                            <a class="btn" data-edit="strikethrough" title="Strikethrough"><i
+                                    class="icon-strikethrough"></i></a>
+                            <a class="btn" data-edit="underline" title="Underline (Ctrl/Cmd+U)"><i
+                                    class="icon-underline"></i></a>
+                        </div>
+                        <div class="btn-group">
+                            <a class="btn" data-edit="insertunorderedlist" title="Bullet list"><i
+                                    class="icon-list-ul"></i></a>
+                            <a class="btn" data-edit="insertorderedlist" title="Number list"><i
+                                    class="icon-list-ol"></i></a>
+                            <a class="btn" data-edit="outdent" title="Reduce indent (Shift+Tab)"><i
+                                    class="icon-indent-left"></i></a>
+                            <a class="btn" data-edit="indent" title="Indent (Tab)"><i class="icon-indent-right"></i></a>
+                        </div>
+                        <div class="btn-group">
+                            <a class="btn" data-edit="justifyleft" title="Align Left (Ctrl/Cmd+L)"><i
+                                    class="icon-align-left"></i></a>
+                            <a class="btn" data-edit="justifycenter" title="Center (Ctrl/Cmd+E)"><i
+                                    class="icon-align-center"></i></a>
+                            <a class="btn" data-edit="justifyright" title="Align Right (Ctrl/Cmd+R)"><i
+                                    class="icon-align-right"></i></a>
+                            <a class="btn" data-edit="justifyfull" title="Justify (Ctrl/Cmd+J)"><i
+                                    class="icon-align-justify"></i></a>
+                        </div>
+                        <div class="btn-group">
+                            <a class="btn dropdown-toggle" data-toggle="dropdown" title="Hyperlink"><i
+                                    class="icon-link"></i></a>
+                            <div class="dropdown-menu input-append">
+                                <input class="span2" placeholder="URL" type="text" data-edit="createLink" />
+                                <button class="btn" type="button">Add</button>
+                            </div>
+                            <a class="btn" data-edit="unlink" title="Remove Hyperlink"><i class="icon-cut"></i></a>
+
+                        </div>
+
+                        <div class="btn-group">
+                            <a class="btn" title="Insert picture (or just drag & drop)" id="pictureBtn"><i
+                                    class="icon-picture"></i></a>
+                            <input type="file" data-role="magic-overlay" data-target="#pictureBtn"
+                                data-edit="insertImage" />
+                        </div>
+                        <div class="btn-group">
+                            <a class="btn" data-edit="undo" title="Undo (Ctrl/Cmd+Z)"><i class="icon-undo"></i></a>
+                            <a class="btn" data-edit="redo" title="Redo (Ctrl/Cmd+Y)"><i class="icon-repeat"></i></a>
+                        </div>
+                        <input type="text" data-edit="inserttext" id="voiceBtn" x-webkit-speech="">
+                    </div>
+
+                    <div id="editor" @input="changeText">
+                        {{content}}
+                    </div>
+                    <button class="submitBtn" type="submit" @click="modify()">提交</button>
+                    <button class="delBtn" type="submit" @click="dellete()">删除该博客</button>
+                </div>
+
+            </div>
+        </div>
+        <footer class="footer">
+            <ul>
+                <li><a href="./login.html">CSS/DIV</a></li>
+                <li><a href="#">视频分享</a></li>
+                <li><a href="#">java</a></li>
+                <li><a href="#">javacript</a></li>
+                <li><a href="#">Linux</a></li>
+                <li><a href="#">Mac</a></li>
+                <li><a href="#">PC技术</a></li>
+                <li><a href="#">PHP</a></li>
+                <li><a href="#">Python</a></li>
+                <li><a href="#">Raspberry</a></li>
+                <li><a href="#">Ubuntu</a></li>
+                <li><a href="#">wordpress</a></li>
+                <li><a href="#">关于SEO分享经验</a></li>
+                <li><a href="#">听听音乐</a></li>
+                <li><a href="#">幽默搞笑</a></li>
+                <li><a href="#">建站经验</a></li>
+                <li><a href="#">新闻资讯</a></li>
+                <li><a href="#">模拟飞行</a></li>
+                <li><a href="#">片言碎语</a></li>
+                <li><a href="#">幽默搞笑</a></li>
+                <li><a href="#">建站经验</a></li>
+                <li><a href="#">新闻资讯</a></li>
+                <li><a href="#">模拟飞行</a></li>
+                <li><a href="#">片言碎语</a></li>
+            </ul>
+            <p><a href="">Copyright © 2010-2019 人博客 All rights reserved.</a></p>
+        </footer>
+
+    </div>
+
+
+    <script type="text/javascript" src="https://unpkg.com/vue"></script>
+    <script src="https://cdn.bootcss.com/axios/0.19.0-beta.1/axios.js"></script>
+
+    <script>
+        $(function () {
+            function initToolbarBootstrapBindings() {
+                var fonts = ['Serif', 'Sans', 'Arial', 'Arial Black', 'Courier',
+                        'Courier New', 'Comic Sans MS', 'Helvetica', 'Impact', 'Lucida Grande', 'Lucida Sans',
+                        'Tahoma', 'Times',
+                        'Times New Roman', 'Verdana'
+                    ],
+                    fontTarget = $('[title=Font]').siblings('.dropdown-menu');
+                $.each(fonts, function (idx, fontName) {
+                    fontTarget.append($('<li><a data-edit="fontName ' + fontName +
+                        '" style="font-family:\'' + fontName + '\'">' + fontName + '</a></li>'));
+                });
+                $('a[title]').tooltip({
+                    container: 'body'
+                });
+                $('.dropdown-menu input').click(function () {
+                        return false;
+                    })
+                    .change(function () {
+                        $(this).parent('.dropdown-menu').siblings('.dropdown-toggle').dropdown('toggle');
+                    })
+                    .keydown('esc', function () {
+                        this.value = '';
+                        $(this).change();
+                    });
+
+                $('[data-role=magic-overlay]').each(function () {
+                    var overlay = $(this),
+                        target = $(overlay.data('target'));
+                    overlay.css('opacity', 0).css('position', 'absolute').offset(target.offset()).width(
+                        target.outerWidth()).height(target.outerHeight());
+                });
+                if ("onwebkitspeechchange" in document.createElement("input")) {
+                    var editorOffset = $('#editor').offset();
+                    $('#voiceBtn').css('position', 'absolute').offset({
+                        top: editorOffset.top,
+                        left: editorOffset.left + $('#editor').innerWidth() - 35
+                    });
+                } else {
+                    $('#voiceBtn').hide();
+                }
+            };
+
+            function showErrorAlert(reason, detail) {
+                var msg = '';
+                if (reason === 'unsupported-file-type') {
+                    msg = "Unsupported format " + detail;
+                } else {
+                    console.log("error uploading file", reason, detail);
+                }
+                $('<div class="alert"> <button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                    '<strong>File upload error</strong> ' + msg + ' </div>').prependTo('#alerts');
+            };
+            initToolbarBootstrapBindings();
+            $('#editor').wysiwyg({
+                fileUploadError: showErrorAlert
+            });
+            window.prettyPrint && prettyPrint();
+        });
+    </script>
+
+    <!-- <script>
+        function onSubmitHandle() {
+            let title = $("#author").val().trim()
+            let content = $("#editor").text().trim()
+            console.log(title, tags, blog)
+            axios.post(`/setEveryDay?author=${title}&content=${content}`).then(function (res) {
+                console.log(res)
+            })
+
+            alert("已提交")
+        }
+    </script> -->
+
+    <script src="./js/editWrapper.js"></script>
+</body>
+
+</html>

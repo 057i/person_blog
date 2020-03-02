@@ -6,7 +6,6 @@ let svgCaptcha = require("svg-captcha")
 function getComments(section, success) {
     let connection = dbUtil.createConnect()
     let queryStr = "select * from comments where section =? order by utime desc limit 1 ,5 "
-
     connection.connect()
     connection.query(queryStr, [section], function (err, result) {
         if (err === null) {
@@ -74,15 +73,55 @@ function getNewComments(limit, success) {
 
 //获取svg验证码
 function createRandomCode(success) {
-    let cap = svgCaptcha.create({fontSize: 50, height: 34, width: 100});
+    let cap = svgCaptcha.create({ fontSize: 50, height: 34, width: 100 });
     success(cap)
 }
+
+
+
+
+
+//修改留言页和关于我页面评论
+// function setComment(id, author, content, time, success) {
+//     let connection = dbUtail.createConnect();
+//     let queryStr = "update every_day set author=?,content=?,ctime=? where id=?"
+//     connection.connect()
+//     connection.query(queryStr, [author, content, time, id], function (err, result) {
+//         if (err === null) {
+//             console.log(success, "修改")
+//             success(result)
+//         } else {
+//             console.log(err)
+//         }
+//     })
+//     connection.end()//拿到数据后关闭连接
+// }
+
+// 删除评论
+function delComment(id, success) {
+    let connection = dbUtil.createConnect()
+    let queryStr = "delete from comments where id=?"
+    connection.connect()
+    connection.query(queryStr, [id], function (err, result) {
+        if (err === null) {
+            console.log(success, "删除成功")
+            success(result)
+        } else {
+            console.log(err)
+        }
+    })
+    connection.end()//拿到数据后关闭连接
+}
+
+
+
+
 
 
 module.exports = {
     setComment: setComment,
     getComments: getComments,
-    // getCommentsCount: getCommentsCount,
     createRandomCode: createRandomCode,
-    getNewComments: getNewComments
+    getNewComments: getNewComments,
+    delComment: delComment
 }

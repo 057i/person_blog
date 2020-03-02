@@ -1,0 +1,44 @@
+.hero-unit {
+    width: 80%;
+    box-sizing: border-box;
+}
+
+.btn-group {
+    margin-bottom: 5px;
+}
+
+#editor {
+    margin-bottom: 20px;
+}
+
+.submitBtn {
+    border: none;
+    padding: 10px 15px;
+    border-radius: 7px;
+    background: yellowgreen;
+    color: #fff;
+    font-weight: bolder;
+    margin-right: 5px;
+    outline: none;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.delBtn {
+    border: none;
+    padding: 10px 15px;
+    border-radius: 7px;
+    background: red;
+    color: #fff;
+    font-weight: bolder;
+    margin-right: 5px;
+    outline: none;
+    cursor: pointer;
+    text-decoration: none;
+
+
+}
+
+.footer {
+
+}

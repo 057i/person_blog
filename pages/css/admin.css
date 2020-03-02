@@ -1,0 +1,192 @@
+.turnPage {
+    text-align: center;
+
+}
+
+.turnPage ul {
+    overflow: hidden;
+    /*margin: 0 auto;*/
+}
+
+.turnPage ul>li {
+    /* list-style: none;
+    float: left;
+    padding: 10px;
+    background: pink;
+    margin: 0 5px;
+    border: 1px solid darkgray;
+    border-radius: 10px; */
+    list-style: none;
+    float: left;
+    padding: 15px;
+    background: #333;
+    margin: 0 5px;
+    border: 1px solid darkgray;
+    border-radius: 10px;
+    color: #d3d3d3;
+    font-weight: bold;
+    font-size: 1.3em;
+}
+
+.turnPage ul>li:hover {
+    background: #d3d3d3;
+    color: #333;
+    cursor: pointer;
+    box-shadow: 2px 2px 2px 2px lightblue;
+}
+
+.turnPage .curPage {
+    color: red;
+}
+
+.btnWrapper {
+    height: 100px;
+}
+
+.btnWrapper ::after {
+    clear: both;
+}
+
+
+.editBtn {
+    border: none;
+    padding: 10px 15px;
+    border-radius: 7px;
+    background: yellowgreen;
+    color: #fff;
+    font-weight: bolder;
+    margin-right: 5px;
+    outline: none;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.delBtn {
+    border: none;
+    padding: 10px 15px;
+    border-radius: 7px;
+    background: red;
+    color: #fff;
+    font-weight: bolder;
+    outline: none;
+    cursor: pointer;
+}
+
+
+
+#edit_everyday_btn,
+#editBlog_btn,
+#edit_about_btn,
+#edit_guesthook_btn {
+    display: inline-block;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    text-decoration: none;
+
+    background: #333;
+    margin: 0 5px;
+    border: 1px solid darkgray;
+    border-radius: 10px;
+    color: #d3d3d3;
+
+}
+
+.show_area {
+    display: block;
+}
+
+.hide_area {
+    display: none;
+}
+
+.commentList {
+    color: #31708f;
+    background: #d9edf7;
+    border: 1px dashed #7ca4c1;
+}
+
+.comment-wrapper {
+    padding: 20px;
+    border-bottom: 1px dashed #7ca4c1;
+}
+
+
+
+/* 每日一句 */
+
+
+
+.everyday-wrapper {
+    font-weight: bolder;
+    padding: 15px;
+    border: 1px red dotted;
+    margin-bottom: 15px;
+    background: #fff;
+}
+
+.everyday-content {
+    padding: 10px;
+}
+
+.manager_btn_wrapper {
+    text-align: right;
+    margin-right: 30px;
+}
+
+
+
+
+.btn_active {
+    color: red !important;
+}
+
+
+
+
+/* 下拉框 */
+ul {
+    list-style: none;
+}
+
+.nav>li {
+    float: left;
+}
+
+ul a {
+    display: block;
+    text-decoration: none;
+    width: 100px;
+    height: 50px;
+    text-align: center;
+    line-height: 50px;
+    color: white;
+    background-color: #191918;
+}
+
+.nav>li:first-child a {
+    border-radius: 10px 0 0 10px;
+}
+
+.nav>li:last-child a {
+    border-radius: 0 10px 10px 0;
+}
+
+.drop-down {
+    position: relative;
+}
+
+.drop-down-content {
+    padding: 0;
+    display: none;
+    position: absolute;
+}
+
+
+.drop-down-content li:hover a {
+    background-color: red;
+}
+
+.nav .drop-down:hover .drop-down-content {
+    display: block;
+}

@@ -3,7 +3,8 @@
     src: url("../font/glyphicons-halflings-regular.woff2");
 }
 
-html, body {
+html,
+body {
     margin: 0;
     padding: 0;
     width: 100%;
@@ -25,7 +26,8 @@ header {
     height: 50px;
 }
 
-.nav-left, .search-bar {
+.nav-left,
+.search-bar {
     display: inline-block;
 
 }
@@ -61,14 +63,14 @@ header {
     display: inline;
 }
 
-.menu > li {
+.menu>li {
     list-style: none;
     height: 50px;
     line-height: 50px;
     display: inline-block;
 }
 
-.menu > li > a {
+.menu>li>a {
     display: inline-block;
 }
 
@@ -124,7 +126,7 @@ header {
     overflow: hidden;
 }
 
-.main > .left-content {
+.main>.left-content {
     width: 66%;
     display: inline-block;
     box-sizing: border-box;
@@ -162,6 +164,7 @@ header {
 .article {
     background-color: white;
     padding: 20px 10px;
+    overflow: hidden;
 }
 
 .article .title {
@@ -181,7 +184,7 @@ header {
     font-size: 16px;
 }
 
-.main > .right-content-Wrapper {
+.main>.right-content-Wrapper {
     width: 34%;
     float: right;
     display: inline-block;
@@ -219,16 +222,20 @@ header {
 
 }
 
-.right-content-Wrapper .hot, .right-content-Wrapper .newCommentArea {
+.right-content-Wrapper .hot,
+.right-content-Wrapper .newCommentArea {
     width: 100%;
-    background-color: rgb(31, 31, 31);;
+    background-color: rgb(31, 31, 31);
+    ;
     padding: 0;
     margin: 0;
 }
 
-.hot li, .newCommentArea li {
+.hot li,
+.newCommentArea li {
     list-style: none;
-    border-bottom: 1px solid rgb(41, 41, 41);;
+    border-bottom: 1px solid rgb(41, 41, 41);
+    ;
     padding: 15px;
 }
 
@@ -241,7 +248,7 @@ header {
     color: #337ab7;
 }
 
-.newCommentArea > li > a {
+.newCommentArea>li>a {
     color: #777;
     text-decoration: none;
     overflow: hidden;
@@ -251,7 +258,7 @@ header {
     width: 100%;
 }
 
-.newCommentArea > li > a:hover {
+.newCommentArea>li>a:hover {
     color: #337ab7;
 }
 
@@ -325,5 +332,3 @@ header {
 [v-cloak] {
     display: none;
 }
-
-

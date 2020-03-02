@@ -3,7 +3,6 @@ let url = require("url")
 let BlogDao = require("../dao/BlogDao")
 
 function getBlogById(req, res) {
-
     let params = url.parse(req.url, true).query
     BlogDao.getBlogById(params.bid, function (result) {
         res.writeHead(200)

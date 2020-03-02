@@ -163,8 +163,9 @@ let commentArea = new Vue({
                         }
                     }
                 }
-                // console.log(result, 6786875)
+
                 commentArea.commentList = self.format(result)
+                console.log(commentArea.commentList, 6786875)
                 //初始化评论条数
                 commentArea.count = commentArea.commentList.length
             })
@@ -252,6 +253,7 @@ let commentArea = new Vue({
                 //动态拼接正则
                 let applyStr = new RegExp(`${commentArea.vcode}`, "i")
                 if (applyCode.match(applyStr) !== null) {
+                    // console.log(self.parent, "父级")
                     axios.get(`/setComment?blog_id=${self.blogId}&parent=${self.parent}&section=${self.section}&user_name=${user_name}&comment=${comment}&email=${email}`)
                         .then(function (res) {
                             if (res != null) {
@@ -263,7 +265,9 @@ let commentArea = new Vue({
                                 document.getElementById("check_inp").value = ""
 
                                 //添加回复成功后再获取一次评论信息
-                                // self.initialComments(section)
+                                // console.log(self.section)
+                                self.initialComments(self.section)
+                                console.log("再获取")
                                 //
                                 // //初始化验证码
                                 // self.initialCheck(section)
@@ -273,6 +277,7 @@ let commentArea = new Vue({
                         })
                 } else {
                     alert("验证码错了")
+                    document.getElementById("check_inp").value = ""
                     commentArea.createRandomCode()
                 }
 

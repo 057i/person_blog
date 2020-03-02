@@ -1,5 +1,6 @@
 function getCtime() {
-    return Date.now() / 1000
+    return Date.now()
 }
+
 console.log(getCtime())
 module.exports = getCtime

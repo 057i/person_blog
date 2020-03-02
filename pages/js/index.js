@@ -152,27 +152,27 @@ let articleList = new Vue({
 
                 if (totalPage <= 4) {
                     for (let i = 1; i <= totalPage; i++) {
-                        result.push({text: i, val: i})
+                        result.push({ text: i, val: i })
                     }
                 } else {
                     if (this.curPage > 2) {
-                        result.push({text: this.curPage - 2, val: this.curPage - 2})
+                        result.push({ text: this.curPage - 2, val: this.curPage - 2 })
                     }
                     if (this.curPage > 1) {
-                        result.push({text: this.curPage - 1, val: this.curPage - 1})
+                        result.push({ text: this.curPage - 1, val: this.curPage - 1 })
                     }
-                    result.push({text: this.curPage, val: this.curPage})
+                    result.push({ text: this.curPage, val: this.curPage })
 
                     // console.log(this.curPage, (totalPage + this.pageSize - 1) / this.pageSize)
 
 
                     //判断倒数最后一页
                     if (this.curPage + 1 <= (totalPage + this.totalCount - 1) / this.pageSize) {
-                        result.push({text: this.curPage + 1, val: this.curPage + 1})
+                        result.push({ text: this.curPage + 1, val: this.curPage + 1 })
                     }
                     //判断倒数最后两页
                     if (this.curPage + 2 <= (totalPage + this.totalCount - 1) / this.pageSize) {
-                        result.push({text: this.curPage + 2, val: this.curPage + 2})
+                        result.push({ text: this.curPage + 2, val: this.curPage + 2 })
                     }
                 }
 
@@ -220,7 +220,7 @@ let articleList = new Vue({
     created() {
 
         //初始化时候判断url是否包含搜索关键参数，没有就渲染
-        if (location.search == "" || location.search.includes("searchByWord=false")) {
+        if (location.search.includes("searchByWord=false")) {
             // let url = window.location.origin;
             history.replaceState("", "", `/?searchByWord=false&page=${this.curPage}`);
         }

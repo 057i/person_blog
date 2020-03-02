@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>管理--个人博客</title>
+    <link rel="stylesheet" href="./css/base.css">
+    <link rel="stylesheet" href="./css/admin.css">
+    <link rel="stylesheet" href="./css/about.css">
+</head>
+
+<body>
+    <header>
+        <div class="nav-content">
+            <div class="nav-left">
+                <a href="/">个人博客 | 博客管理</a>
+                <!-- <ul class="menu" id="navMenu">
+                    <li><a href="/admin.html">管理首页</a></li>
+
+                </ul> -->
+
+            </div>
+
+            <div class="search-bar" id="searchBar">
+                <input type="text" placeholder="输入关键字查找博客" v-model="key">
+                <button @click="setSearchKey()">搜索</button>
+            </div>
+
+        </div>
+    </header>
+    <div class="main">
+        <div class="left-content" id="manager">
+            <div class="btnWrapper">
+                <ul class="nav">
+                    <!-- <ul class="dropMenu"> -->
+                    <li><a href="/admin.html">管理首页</a></li>
+
+                    <li class="drop-down"><a href="#">每日一句</a>
+                        <ul class="drop-down-content">
+                            <li>
+                                <a id="edit_everyday_btn" :class="[tab==1?'btn_active':'']"
+                                    v-on:click="nextTab(1)">添加每日一句</a>
+                            </li>
+                            <li>
+                                <a id="edit_everyday_btn" :class="[tab==2?'btn_active':'']"
+                                    v-on:click="nextTab(2)">编辑每日一句</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="drop-down"><a href="#">每日一句</a>
+                        <ul class="drop-down-content">
+                            <li>
+                                <a id="editBlog_btn" :class="[tab==3?'btn_active':'']" v-on:click="nextTab(3)">添加博客</a>
+                            </li>
+                            <li>
+                                <a id="editBlog_btn" :class="[tab==4?'btn_active':'']" v-on:click="nextTab(4)">编辑博客</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="drop-down"><a href="#">每日一句</a>
+                        <ul class="drop-down-content">
+                            <li>
+                                <a id="edit_about_btn" :class="[tab==5?'btn_active':'']"
+                                    v-on:click="nextTab(5)">编辑关于页留言</a>
+                            </li>
+                            <li>
+                                <a id="edit_guesthook_btn" :class="[tab==6?'btn_active':'']"
+                                    v-on:click="nextTab(6)">编辑留言页留言</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+
+
+            </div>
+
+            <!-- 管理区域 -->
+            <div class="manager-content">
+                <div id="manager-every-day" :class="[tab==2?'show_area':'hide_area']">
+                    <div class="everyday-list">
+                        <div class="everyday-wrapper" v-for="(everyday,index) in everydayList" keys="index">
+                            <div class="everyday-content">{{everyday.content}}</div>
+                            <div class="manager_btn_wrapper">
+                                <a :href="['/edit.html?everydayId='+everyday.id]" class="editBtn">编辑</a>
+                                <button class="delBtn" @click="delEveryDay(everyday.id)">删除</button>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div id="manager-blog" :class="[tab==4?'show_area':'hide_area']">
+
+                    <!--            博客列表-->
+                    <div class="articleWrapper" v-for="(article,index) in list" v-cloak>
+                        <div class="article">
+                            <!--                    动态拼接类名-->
+                            <a :href="['/blog_detail.html?bid='+article.id]" class="title">{{article.title}}</a>
+                            <p class="content">{{article.content}}</p>
+                            <div class="manager_btn_wrapper">
+                                <a :href="['/edit.html?bid='+article.id]" class="editBtn">编辑</a>
+                                <button class="delBtn">删除</button>
+                            </div>
+
+                        </div>
+                        <div class="mark">
+                            最后编辑于{{article.ctime}} |
+                            浏览({{article.view}}) |
+                            Tags:{{article.tags}}
+                        </div>
+                    </div>
+
+                    <!--            翻页-->
+                    <div class="turnPage" id="turnPage" v-cloak>
+                        <ul>
+                            <li @click="setMovePage(-1)">上一页</li>
+                            <li v-for="(elm,index) in pageNumberList" :key="elm.val"
+                                :class="{'curPage':elm.val==curPage}" @click="setCurPage(elm.val-1)">
+                                {{elm.text}}
+                            </li>
+                            <li @click="setMovePage(+1)">下一页</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 关于页留言和留言页留言 -->
+                <div id="manager-about" :class="[tab==5||tab==6?'show_area':'hide_area']">
+
+                    <div class="commentList">
+                        <div class="comment-wrapper" v-for="(comment,index) in commentList" keys="index">
+                            <!-- <img src="./image/avator.jpg" alt="" class="avator"> -->
+                            <div class="comment-msg">
+                                <span class="comment-user">{{comment.user_name}}</span>
+                                {{comment.options?" 在我的关于页回复了 "+comment.options:" 在我的关于页面评论了 "}}
+
+                                "{{comment.comment}}"
+                                &nbsp;&nbsp;&nbsp;{{comment.ctime}}
+
+                                <div class="manager_btn_wrapper">
+                                    <!-- <input type="text" placeholder="输入回复内容"
+                                        :style="{display:(index==replayIndex && replayNum%2==1?'inline-block':'none')}"
+                                        :value="replayContent">
+
+                                    <button class="editBtn" @click="reply(index,comment.id, comment.user_name)">回复</a> -->
+                                    <button class="delBtn" @click="delComment(comment.id)">删除</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="submit-comment-area" id="submit-comment-area">
+                        <div class="submit-comment">
+                            <span class="title">发表评论</span>
+                            <input type="text" placeholder="昵称" id="creator">
+                            <input type="text" placeholder="邮箱(评论被回复时你能收到通知)" id="creator-email">
+                            <textarea name="" placeholder="无意义内容我可能不会回复你" id="submit_content"></textarea>
+                            <div class="checkBox">
+                                <input type="text" placeholder="验证码" id="check_inp">
+                                <!-- <span id="checkImg" v-html="vImg" @click="createRandomCode()"></span> -->
+                            </div>
+
+                            <div class="btnBox">
+                                <button id="submit" @click="sendComment()">提交留言</button>
+                                <button id="reset">重写</button>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <!-- <div id="manager-guesthook" :class="[tab==4?'show_area':'hide_area']">
+                    留言页管理区
+                </div> -->
+            </div>
+
+
+
+
+
+        </div>
+
+        <div class="right-content-Wrapper">
+            <!--        随机标签云区-->
+            <div class="right-content-Area">
+                <div class="right-content-title">随机标签云</div>
+                <div class="right-content" id="randomTags" v-cloak>
+                    <a :href="tag.link" v-for="tag in tags"
+                        :style="{fontSize:randomFontSize(),color:randomColor()}">{{tag.tagName}}</a>
+
+                </div>
+            </div>
+
+            <!--        最近热门区-->
+            <div class="right-content-Area">
+                <div class="right-content-title">最近热门</div>
+                <ul class="hot" id="hot" v-cloak>
+                    <li v-for="hot in hotList"><a :href="hot.url">{{hot.title}}</a></li>
+                </ul>
+            </div>
+
+
+            <!--        最新评论区-->
+            <div class="right-content-Area">
+                <div class="right-content-title">最新评论</div>
+                <ul class="newCommentArea" id="newComment" v-cloak>
+                    <li v-for="comment in newCommentList">
+                        <div class="user">
+                            <span class="userName">{{comment.userName}}</span>
+                            <span class="time">{{comment.ctime}}</span>
+                        </div>
+                        <a href="#">{{comment.commentContent}}</a>
+                    </li>
+                </ul>
+            </div>
+
+
+            <!--        友情链接区-->
+            <div class="right-content-Area">
+                <div class="right-content-title">友情链接(不稳定的站可能会被我直接删除)</div>
+                <div class="linkTo">
+                    <span><a href="./newCodeDebug.html">IO编程环境</a></span>
+                    <span><a href="#">佛布朗斯基</a></span>
+                    <span><a href="#">kTWO博客</a></span>
+                    <span><a href="#">Lizenghai's Blog</a></span>
+                    <span><a href="#">个人博客</a></span>
+                    <span><a href="#">Skymoon</a></span>
+                    <span><a href="#">网讯IT资讯</a></span>
+                    <span><a href="#">docker技术网站</a></span>
+                    <span><a href="#">挨踢茶馆</a></span>
+                    <span><a href="#">佛布朗斯基</a></span>
+                    <span><a href="#">kTWO博客</a></span>
+                    <span><a href="#">docker技术网站</a></span>
+                    <span><a href="#">挨踢茶馆</a></span>
+                    <span><a href="#">佛布朗斯基</a></span>
+                    <span><a href="#">kTWO博客</a></span>
+                    <span><a href="#">佛布朗斯基</a></span>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <footer class="footer">
+        <ul>
+            <li><a href="./login.html">CSS/DIV</a></li>
+            <li><a href="#">视频分享</a></li>
+            <li><a href="#">java</a></li>
+            <li><a href="#">javacript</a></li>
+            <li><a href="#">Linux</a></li>
+            <li><a href="#">Mac</a></li>
+            <li><a href="#">PC技术</a></li>
+            <li><a href="#">PHP</a></li>
+            <li><a href="#">Python</a></li>
+            <li><a href="#">Raspberry</a></li>
+            <li><a href="#">Ubuntu</a></li>
+            <li><a href="#">wordpress</a></li>
+            <li><a href="#">关于SEO分享经验</a></li>
+            <li><a href="#">听听音乐</a></li>
+            <li><a href="#">幽默搞笑</a></li>
+            <li><a href="#">建站经验</a></li>
+            <li><a href="#">新闻资讯</a></li>
+            <li><a href="#">模拟飞行</a></li>
+            <li><a href="#">片言碎语</a></li>
+            <li><a href="#">幽默搞笑</a></li>
+            <li><a href="#">建站经验</a></li>
+            <li><a href="#">新闻资讯</a></li>
+            <li><a href="#">模拟飞行</a></li>
+            <li><a href="#">片言碎语</a></li>
+        </ul>
+        <p><a href="">Copyright © 2010-2019 人博客 All rights reserved.</a></p>
+    </footer>
+
+
+    <!--引入vue cdn 和自己的js-->
+    <script type="text/javascript" src="https://unpkg.com/vue"></script>
+    <script src="https://cdn.bootcss.com/axios/0.19.0-beta.1/axios.js"></script>
+    <script src="./js/base.js"></script>
+    <script src="./js/index.js"></script>
+    <script src="./js/admin.js"></script>
+
+
+
+</body>
+
+</html>
